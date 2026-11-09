@@ -29,7 +29,7 @@ type Search = { codigo?: string };
 
 export const Route = createFileRoute("/mi-visita")({
   validateSearch: (search: Record<string, unknown>): Search =>
-    typeof search.codigo === "string" && search.codigo ? { codigo: search.codigo } : {},
+    typeof search["codigo"] === "string" && search["codigo"] ? { codigo: search["codigo"] } : {},
   head: () => ({
     meta: [
       { title: "Mi visita · Termas Punulaf" },

@@ -99,7 +99,7 @@ export function SlotGrid({
   people: number;
   now: Date;
   kinds: ResourceKind[];
-  selected: { tina?: number; sauna?: number };
+  selected: { tina?: number | undefined; sauna?: number | undefined };
   onSelect: (kind: ResourceKind, hour: number) => void;
 }) {
   const cols = kinds.length === 2 ? "grid-cols-[3rem_1fr_1fr]" : "grid-cols-[3rem_1fr]";

@@ -24,7 +24,7 @@ function empty(season: "baja" | "alta" = "baja"): TermasState {
 }
 
 function draft(over: { [K in keyof BookingDraft]?: BookingDraft[K] | undefined } = {}): BookingDraft {
-  return { packageId: "tina", date: DAY, people: 1, infants: 0, tinaHour: 11, name: "Prueba", phone: "+56 9 1111 2222", ...over };
+  return { packageId: "tina", date: DAY, people: 1, infants: 0, tinaHour: 11, name: "Prueba", phone: "+56 9 1111 2222", ...over } as BookingDraft;
 }
 
 function book(state: TermasState, over: Parameters<typeof draft>[0], code: string, now = NOW): TermasState {

@@ -31,7 +31,7 @@ type Search = { paquete?: PackageId };
 
 export const Route = createFileRoute("/reservar")({
   validateSearch: (search: Record<string, unknown>): Search => {
-    const id = search.paquete as PackageId;
+    const id = search["paquete"] as PackageId;
     return PACKAGES.some((p) => p.id === id) ? { paquete: id } : {};
   },
   head: () => ({
@@ -57,7 +57,7 @@ function ReservarPage() {
 type StepId = "paquete" | "grupo" | "horario" | "datos";
 const STEP_LABEL: Record<StepId, string> = { paquete: "Paquete", grupo: "Día y grupo", horario: "Horario", datos: "Tus datos" };
 
-function Wizard({ state, initialPackage }: { state: TermasState; initialPackage?: PackageId }) {
+function Wizard({ state, initialPackage }: { state: TermasState; initialPackage?: PackageId | undefined }) {
   const navigate = useNavigate();
   const now = useNow();
   const today = toISODate(now);
@@ -134,12 +134,12 @@ function Wizard({ state, initialPackage }: { state: TermasState; initialPackage?
       navigate({ to: "/confirmacion/$codigo", params: { codigo: res.value.code } });
       return;
     }
-    setStep(steps[idx + 1]);
+    setStep(steps[idx + 1] ?? step);
   }
 
   function back() {
     setError(null);
-    if (idx > 0) setStep(steps[idx - 1]);
+    if (idx > 0) setStep(steps[idx - 1] ?? step);
   }
 
   const missing =
