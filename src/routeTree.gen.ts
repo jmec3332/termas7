@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as MiVisitaRouteImport } from './routes/mi-visita'
+import { Route as ReservarRouteImport } from './routes/reservar'
+import { Route as ConfirmacionCodigoRouteImport } from './routes/confirmacion.$codigo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MiVisitaRoute = MiVisitaRouteImport.update({
+  id: '/mi-visita',
+  path: '/mi-visita',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReservarRoute = ReservarRouteImport.update({
+  id: '/reservar',
+  path: '/reservar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmacionCodigoRoute = ConfirmacionCodigoRouteImport.update({
+  id: '/confirmacion/$codigo',
+  path: '/confirmacion/$codigo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/mi-visita': typeof MiVisitaRoute
+  '/reservar': typeof ReservarRoute
+  '/confirmacion/$codigo': typeof ConfirmacionCodigoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/mi-visita': typeof MiVisitaRoute
+  '/reservar': typeof ReservarRoute
+  '/confirmacion/$codigo': typeof ConfirmacionCodigoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/mi-visita': typeof MiVisitaRoute
+  '/reservar': typeof ReservarRoute
+  '/confirmacion/$codigo': typeof ConfirmacionCodigoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/admin' | '/mi-visita' | '/reservar' | '/confirmacion/$codigo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/admin' | '/mi-visita' | '/reservar' | '/confirmacion/$codigo'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/mi-visita'
+    | '/reservar'
+    | '/confirmacion/$codigo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  MiVisitaRoute: typeof MiVisitaRoute
+  ReservarRoute: typeof ReservarRoute
+  ConfirmacionCodigoRoute: typeof ConfirmacionCodigoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mi-visita': {
+      id: '/mi-visita'
+      path: '/mi-visita'
+      fullPath: '/mi-visita'
+      preLoaderRoute: typeof MiVisitaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reservar': {
+      id: '/reservar'
+      path: '/reservar'
+      fullPath: '/reservar'
+      preLoaderRoute: typeof ReservarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmacion/$codigo': {
+      id: '/confirmacion/$codigo'
+      path: '/confirmacion/$codigo'
+      fullPath: '/confirmacion/$codigo'
+      preLoaderRoute: typeof ConfirmacionCodigoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  MiVisitaRoute: MiVisitaRoute,
+  ReservarRoute: ReservarRoute,
+  ConfirmacionCodigoRoute: ConfirmacionCodigoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
