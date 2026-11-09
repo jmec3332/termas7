@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { Ban, Check, Clock, Wrench, XCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { DURATION_MIN, SLOT_HOURS, TOTAL_UNITS } from "@/lib/termas/config";
+import { CLOSE_HOUR, DURATION_MIN, OPEN_HOUR, SLOT_HOURS, TOTAL_UNITS } from "@/lib/termas/config";
 import { hh } from "@/lib/termas/dates";
 import { slotInfo, type SlotInfo } from "@/lib/termas/logic";
 import type { OutOfService, ResourceKind, TermasState } from "@/lib/termas/types";
@@ -153,7 +153,7 @@ export function formatUnits(o: Pick<OutOfService, "kind" | "units">): string {
 }
 
 export function formatHours(o: Pick<OutOfService, "fromHour" | "toHour">): string {
-  if (o.fromHour <= SLOT_HOURS[0] && o.toHour >= SLOT_HOURS.at(-1)! + 1) return "todo el día";
+  if (o.fromHour <= OPEN_HOUR && o.toHour >= CLOSE_HOUR) return "todo el día";
   return `de ${hh(o.fromHour)} a ${hh(o.toHour)}`;
 }
 

@@ -29,7 +29,7 @@ export interface Reservation {
   infants: number;
   name: string;
   phone: string;
-  email?: string;
+  email?: string | undefined;
   turns: Turn[];
   /** Precio congelado al momento de reservar. */
   season: Season;
@@ -37,7 +37,7 @@ export interface Reservation {
   total: number;
   status: ReservationStatus;
   createdAt: string;
-  updatedAt?: string;
+  updatedAt?: string | undefined;
 }
 
 export interface OutOfService {
@@ -70,9 +70,9 @@ export interface BookingDraft {
   date: string;
   people: number;
   infants: number;
-  tinaHour?: number;
-  saunaHour?: number;
+  tinaHour?: number | undefined;
+  saunaHour?: number | undefined;
   name: string;
   phone: string;
-  email?: string;
+  email?: string | undefined;
 }

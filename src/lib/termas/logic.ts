@@ -106,7 +106,7 @@ export interface SlotInfo {
   /** Leyenda siempre visible en la grilla. */
   label: string;
   /** Aviso secundario (p. ej. unidades fuera de servicio). */
-  note?: string;
+  note?: string | undefined;
 }
 
 export function slotInfo(
@@ -118,7 +118,7 @@ export function slotInfo(
     people: number;
     now: Date;
     /** Otro turno ya elegido en Día Completo, para bloquear solapes. */
-    otherTurn?: Pick<Turn, "kind" | "hour">;
+    otherTurn?: Pick<Turn, "kind" | "hour"> | undefined;
   },
 ): SlotInfo {
   const { date, kind, hour, people, now, otherTurn } = opts;

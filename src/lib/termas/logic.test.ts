@@ -23,11 +23,11 @@ function empty(season: "baja" | "alta" = "baja"): TermasState {
   return { version: 1, seededAt: NOW.toISOString(), settings: { season }, reservations: [], outOfService: [] };
 }
 
-function draft(over: Partial<BookingDraft> = {}): BookingDraft {
+function draft(over: { [K in keyof BookingDraft]?: BookingDraft[K] | undefined } = {}): BookingDraft {
   return { packageId: "tina", date: DAY, people: 1, infants: 0, tinaHour: 11, name: "Prueba", phone: "+56 9 1111 2222", ...over };
 }
 
-function book(state: TermasState, over: Partial<BookingDraft>, code: string, now = NOW): TermasState {
+function book(state: TermasState, over: Parameters<typeof draft>[0], code: string, now = NOW): TermasState {
   const res = createReservation(state, draft(over), code, now);
   if (!res.ok) throw new Error(res.error);
   return res.value.state;
@@ -149,7 +149,7 @@ describe("cancelaciones y no vino", () => {
     expect(cancelByCustomer(s, "C2", late).ok).toBe(false);
     const res = cancelByAdmin(s, "C2", late);
     if (!res.ok) throw new Error(res.error);
-    expect(res.value.reservations[0].status).toBe("cancelada_tarde");
+    expect(res.value.reservations[0]!.status).toBe("cancelada_tarde");
     expect(freeAt(res.value, DAY, "tina", 11)).toBe(9);
   });
 
@@ -171,7 +171,7 @@ describe("Mi visita y calendario", () => {
 
   it("el ICS trae un evento por turno con su horario", () => {
     const s = book(empty(), { packageId: "completo", tinaHour: 11, saunaHour: 15 }, "PUN-ICS1");
-    const ics = buildICS(s.reservations[0], NOW);
+    const ics = buildICS(s.reservations[0]!, NOW);
     expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(2);
     expect(ics).toContain("DTSTART:20261120T110000");
     expect(ics).toContain("DTEND:20261120T114500");

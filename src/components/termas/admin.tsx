@@ -21,6 +21,7 @@ import {
   ADMIN_PASSWORD,
   CANCEL_WINDOW_HOURS,
   CLOSE_HOUR,
+  OPEN_HOUR,
   PACKAGES,
   SEASON_LABEL,
   SLOT_HOURS,
@@ -276,7 +277,7 @@ function ReservationRow({ r, now }: { r: Reservation; now: Date }) {
 export function OutOfServiceView({ state, date, today }: { state: TermasState; date: string; today: string }) {
   const [kind, setKind] = useState<ResourceKind>("tina");
   const [units, setUnits] = useState<number[]>([]);
-  const [fromHour, setFromHour] = useState(SLOT_HOURS[0]);
+  const [fromHour, setFromHour] = useState(OPEN_HOUR);
   const [toHour, setToHour] = useState(CLOSE_HOUR);
   const [reason, setReason] = useState("");
 
